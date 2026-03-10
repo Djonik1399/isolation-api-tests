@@ -1,22 +1,18 @@
 from pydantic import BaseModel, IPvAnyAddress
 
 
-class GRPCClientTestConfig(BaseModel):
-    """
-    Конфигурация gRPC-клиента в тестовом окружении.
-
-    Описывает сетевые параметры подключения
-    к gRPC-сервису, независимо от конкретного клиента.
-    """
-
+class GRPCServerTestConfig(BaseModel):
     port: int
     address: IPvAnyAddress
 
     @property
     def url(self):
-        """
-        Полный адрес gRPC-сервиса в формате host:port.
+        return f"{self.address}:{self.port}"
 
-        Используется при инициализации gRPC-канала.
-        """
+class GRPCClientTestConfig(BaseModel):
+    port: int
+    address: IPvAnyAddress
+
+    @property
+    def url(self):
         return f"{self.address}:{self.port}"
